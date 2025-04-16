@@ -1,0 +1,219 @@
+version: 2
+
+sources:
+  - name: bronze
+    database: TELELINK
+    schema: BRONZE
+    tables:
+      - name: ACCOUNTS
+        columns:
+          - name: ACCOUNTID
+          - name: ACCOUNTNAME
+          - name: ACCOUNTTYPE
+          - name: INDUSTRY
+          - name: ANNUALREVENUE
+          - name: PHONE
+          - name: WEBSITE
+          - name: BILLINGADDRESS
+          - name: SHIPPINGADDRESS
+          - name: OWNERID
+      - name: BENEFIT_ENROLLMENTS
+        columns:
+          - name: ENROLLMENTID
+          - name: EMPLOYEEID
+          - name: BENEFITPLANID
+          - name: ENROLLMENTDATE
+          - name: COVERAGELEVEL
+      - name: BENEFIT_PLANS
+        columns:
+          - name: BENEFITPLANID
+          - name: PLANNAME
+          - name: PLANTYPE
+          - name: PROVIDER
+      - name: COMPENSATIONS
+        columns:
+          - name: COMPENSATIONID
+          - name: EMPLOYEEID
+          - name: BASESALARY
+          - name: CURRENCY
+          - name: EFFECTIVEDATE
+          - name: BONUSELIGIBLE
+      - name: CONTACTS
+        columns:
+          - name: CONTACTID
+          - name: ACCOUNTID
+          - name: FIRSTNAME
+          - name: LASTNAME
+          - name: TITLE
+          - name: EMAIL
+          - name: PHONE
+          - name: MAILINGADDRESS
+          - name: OWNERID
+      - name: CUSTOMERS
+        columns:
+          - name: CUSTOMERID
+          - name: CUSTOMERNAME
+          - name: EMAIL
+          - name: PHONE
+          - name: ADDRESS
+          - name: CUSTOMERTYPE
+      - name: DEPARTMENTS
+        columns:
+          - name: DEPARTMENTID
+          - name: DEPARTMENTNAME
+          - name: LOCATION
+          - name: MANAGERID
+      - name: EMPLOYEES
+        columns:
+          - name: EMPLOYEEID
+          - name: FIRSTNAME
+          - name: LASTNAME
+          - name: DATEOFBIRTH
+          - name: GENDER
+          - name: HIREDATE
+          - name: JOBID
+          - name: DEPARTMENTID
+          - name: MANAGERID
+          - name: EMAIL
+          - name: PHONE
+          - name: ADDRESS
+          - name: EMPLOYMENTSTATUS
+      - name: INVENTORY
+        columns:
+          - name: INVENTORYID
+          - name: PRODUCTID
+          - name: PRODUCTNAME
+          - name: LOCATIONID
+          - name: QUANTITYONHAND
+          - name: QUANTITYRESERVED
+      - name: JOB_HISTORIES
+        columns:
+          - name: JOBHISTORYID
+          - name: EMPLOYEEID
+          - name: JOBID
+          - name: STARTDATE
+          - name: ENDDATE
+          - name: DEPARTMENTID
+      - name: JOB_POSITIONS
+        columns:
+          - name: JOBID
+          - name: JOBTITLE
+          - name: JOBLEVEL
+          - name: JOBFAMILY
+          - name: DESCRIPTION
+      - name: LEADS
+        columns:
+          - name: LEADID
+          - name: FIRSTNAME
+          - name: LASTNAME
+          - name: COMPANY
+          - name: EMAIL
+          - name: PHONE
+          - name: STATUS
+          - name: SOURCE
+          - name: OWNERID
+      - name: OPPORTUNITIES
+        columns:
+          - name: OPPORTUNITYID
+          - name: ACCOUNTID
+          - name: OPPORTUNITYNAME
+          - name: STAGE
+          - name: AMOUNT
+          - name: CLOSEDATE
+          - name: PROBABILITY
+          - name: OWNERID
+      - name: PAYROLLS
+        columns:
+          - name: PAYROLLID
+          - name: EMPLOYEEID
+          - name: PAYPERIODSTART
+          - name: PAYPERIODEND
+          - name: GROSSPAY
+          - name: NETPAY
+          - name: TAXESWITHHELD
+          - name: DEDUCTIONS
+      - name: PERFORMANCE_REVIEWS
+        columns:
+          - name: REVIEWID
+          - name: EMPLOYEEID
+          - name: REVIEWPERIODSTART
+          - name: REVIEWPERIODEND
+          - name: REVIEWERID
+          - name: OVERALLRATING
+          - name: COMMENTS
+      - name: PRODUCTS
+        columns:
+          - name: PRODUCTID
+          - name: PRODUCTNAME
+          - name: PRODUCTCODE
+          - name: CATEGORYID
+          - name: SALEPRICE
+          - name: COSTPRICE
+          - name: DESCRIPTION
+          - name: UOM
+      - name: PRODUCT_CATEGORIES
+        columns:
+          - name: CATEGORYID
+          - name: CATEGORYNAME
+          - name: PARENTCATEGORYID
+      - name: PURCHASE_ORDERS
+        columns:
+          - name: PURCHASEORDERID
+          - name: ORDERDATE
+          - name: SUPPLIERID
+          - name: TOTALAMOUNT
+          - name: STATUS
+      - name: SALES_ORDERS
+        columns:
+          - name: SALESORDERID
+          - name: ORDERDATE
+          - name: CUSTOMERID
+          - name: SALESPERSONID
+          - name: TOTALAMOUNT
+          - name: STATUS
+      - name: SALES_ORDER_LINES
+        columns:
+          - name: SALESORDERLINEID
+          - name: SALESORDERID
+          - name: PRODUCTID
+          - name: QUANTITY
+          - name: UNITPRICE
+          - name: SUBTOTAL
+      - name: STOCK_LOCATIONS
+        columns:
+          - name: LOCATIONID
+          - name: LOCATIONNAME
+          - name: LOCATIONTYPE
+      - name: SUPPLIERS
+        columns:
+          - name: SUPPLIERID
+          - name: SUPPLIERNAME
+          - name: EMAIL
+          - name: PHONE
+          - name: ADDRESS
+      - name: TASKS
+        columns:
+          - name: TASKID
+          - name: SUBJECT
+          - name: STATUS
+          - name: PRIORITY
+          - name: DUEDATE
+          - name: OWNERID
+          - name: RELATEDTOID
+      - name: TIME_OFF_REQUESTS
+        columns:
+          - name: REQUESTID
+          - name: EMPLOYEEID
+          - name: REQUESTDATE
+          - name: STARTDATE
+          - name: ENDDATE
+          - name: TIMEOFFTYPE
+          - name: STATUS
+      - name: USERS
+        columns:
+          - name: USERID
+          - name: FIRSTNAME
+          - name: LASTNAME
+          - name: EMAIL
+          - name: ROLE
+          - name: PROFILE

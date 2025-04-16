@@ -1,0 +1,211 @@
+version: 2
+
+models:
+
+- name: hub_accounts
+  description: 'Hub table for Accounts.'
+  columns:
+    - name: accountid
+      description: 'Business key of the account.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'
+
+- name: hub_benefit_plans
+  description: 'Hub table for Benefit Plans.'
+  columns:
+    - name: benefitplanid
+      description: 'Business key of the benefit plan.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'
+
+- name: hub_contacts
+  description: 'Hub table for Contacts.'
+  columns:
+    - name: contactid
+      description: 'Business key of the contact.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'
+
+- name: hub_customers
+  description: 'Hub table for Customers.'
+  columns:
+    - name: customerid
+      description: 'Business key of the customer.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'
+
+- name: hub_departments
+  description: 'Hub table for Departments.'
+  columns:
+    - name: departmentid
+      description: 'Business key of the department.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'
+
+- name: hub_employees
+  description: 'Hub table for Employees.'
+  columns:
+    - name: employeeid
+      description: 'Business key of the employee.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'
+
+- name: hub_job_positions
+  description: 'Hub table for Job Positions.'
+  columns:
+    - name: jobid
+      description: 'Business key of the job position.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'
+
+- name: hub_leads
+  description: 'Hub table for Leads.'
+  columns:
+    - name: leadid
+      description: 'Business key of the lead.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'
+
+- name: hub_opportunities
+  description: 'Hub table for Opportunities.'
+  columns:
+    - name: opportunityid
+      description: 'Business key of the opportunity.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'
+
+- name: hub_products
+  description: 'Hub table for Products.'
+  columns:
+    - name: productid
+      description: 'Business key of the product.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'
+
+- name: hub_product_categories
+  description: 'Hub table for Product Categories.'
+  columns:
+    - name: categoryid
+      description: 'Business key of the product category.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'
+
+- name: hub_purchase_orders
+  description: 'Hub table for Purchase Orders.'
+  columns:
+    - name: purchaseorderid
+      description: 'Business key of the purchase order.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'
+
+- name: hub_stock_locations
+  description: 'Hub table for Stock Locations.'
+  columns:
+    - name: locationid
+      description: 'Business key of the stock location.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'
+
+- name: hub_suppliers
+  description: 'Hub table for Suppliers.'
+  columns:
+    - name: supplierid
+      description: 'Business key of the supplier.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'
+
+- name: hub_tasks
+  description: 'Hub table for Tasks.'
+  columns:
+    - name: taskid
+      description: 'Business key of the task.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'
+
+- name: hub_users
+  description: 'Hub table for Users.'
+  columns:
+    - name: userid
+      description: 'Business key of the user.'
+      tests:
+        - not_null
+        - unique
+    - name: load_date
+      description: 'Timestamp when the record was loaded.'
+    - name: record_source
+      description: 'Source system of the record.'

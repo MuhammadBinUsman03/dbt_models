@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: stg_accounts
+    columns:
+      - name: ACCOUNTID
+        tests:
+          - not_null
+          - unique
+      - name: AccountType
+        tests:
+          - accepted_values:
+              values: ['Corporate Customer', 'Individual Customer']
+      - name: AnnualRevenue
+        tests:
+          - relationships:
+              to: ref('stg_accounts')
+              field: ACCOUNTID
+          - number_gt: 0
+  - name: stg_contacts
+    columns:
+      - name: CONTACTID
+        tests:
+          - not_null
+          - unique
+      - name: Email
+        tests:
+          - not_null
+      - name: ACCOUNTID
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_accounts')
+              field: ACCOUNTID

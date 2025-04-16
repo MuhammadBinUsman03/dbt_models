@@ -1,0 +1,27 @@
+name: 'telelink_dbt'
+version: '1.0'
+config-version: 2
+
+profile: 'telelink_snowflake'
+
+source-paths: ['models']
+macro-paths: ['macros']
+
+models:
+  telelink_dbt:
+    staging:
+      +schema: staging
+      +materialized: incremental
+    silver:
+      hubs:
+        +schema: silver
+        +materialized: incremental
+      links:
+        +schema: silver
+        +materialized: incremental
+      satellites:
+        +schema: silver
+        +materialized: incremental
+    sources:
+      +schema: bronze
+      +materialized: view

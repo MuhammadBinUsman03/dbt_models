@@ -1,0 +1,542 @@
+version: 2
+
+models:
+
+  - name: Sat_Accounts_Details
+    description: 'Satellite table containing account details.'
+    columns:
+      - name: ACCOUNTID
+        description: 'Business key for the account.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_Accounts')
+              field: 'ACCOUNTID'
+      - name: AccountName
+        description: 'Name of the account.'
+        tests:
+          - not_null
+      - name: AccountType
+        description: 'Type of the account.'
+        tests:
+          - accepted_values:
+              values: ['Corporate Customer', 'Individual Customer']
+      - name: Industry
+        description: 'Industry of the account.'
+      - name: AnnualRevenue
+        description: 'Annual revenue of the account.'
+        tests:
+          - expression_is_true: 'AnnualRevenue > 0'
+      - name: PhoneNumber
+        description: 'Contact phone number.'
+        tests:
+          - not_null
+      - name: Address
+        description: 'Billing address of the account.'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_BenefitPlans_Details
+    description: 'Satellite table containing benefit plan details.'
+    columns:
+      - name: BENEFITPLANID
+        description: 'Business key for the benefit plan.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_BenefitPlans')
+              field: 'BENEFITPLANID'
+      - name: PlanName
+        description: 'Name of the benefit plan.'
+        tests:
+          - not_null
+      - name: PlanType
+        description: 'Type of the benefit plan.'
+        tests:
+          - accepted_values:
+              values: ['Health', 'Retirement', 'Dental', 'Vision']
+      - name: ProviderName
+        description: 'Name of the provider.'
+        tests:
+          - not_null
+      - name: Description
+        description: 'Description of the benefit plan.'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_Contacts_Details
+    description: 'Satellite table containing contact details.'
+    columns:
+      - name: CONTACTID
+        description: 'Business key for the contact.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_Contacts')
+              field: 'CONTACTID'
+      - name: ContactName
+        description: 'Full name of the contact.'
+        tests:
+          - not_null
+      - name: Email
+        description: 'Email address of the contact.'
+        tests:
+          - not_null
+          - unique
+          - accepted_values:
+              values: ['^[A-Za-z0-9+_.-]+@(.+)$']
+              regex: true
+      - name: PhoneNumber
+        description: 'Contact phone number.'
+      - name: Address
+        description: 'Mailing address of the contact.'
+      - name: Position
+        description: 'Job title or position of the contact.'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_Customers_Details
+    description: 'Satellite table containing customer details.'
+    columns:
+      - name: CUSTOMERID
+        description: 'Business key for the customer.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_Customers')
+              field: 'CUSTOMERID'
+      - name: CustomerName
+        description: 'Name of the customer.'
+        tests:
+          - not_null
+      - name: CustomerType
+        description: 'Type of the customer.'
+        tests:
+          - accepted_values:
+              values: ['Individual', 'Corporate']
+      - name: ContactInformation
+        description: 'Contact details of the customer.'
+        tests:
+          - not_null
+      - name: Address
+        description: 'Address of the customer.'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_Departments_Details
+    description: 'Satellite table containing department details.'
+    columns:
+      - name: DEPARTMENTID
+        description: 'Business key for the department.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_Departments')
+              field: 'DEPARTMENTID'
+      - name: DepartmentName
+        description: 'Name of the department.'
+        tests:
+          - not_null
+      - name: Location
+        description: 'Location of the department.'
+      - name: ManagerEmployeeID
+        description: 'Employee ID of the department manager.'
+        tests:
+          - relationships:
+              to: ref('Hub_Employees')
+              field: 'EMPLOYEEID'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_Employees_Details
+    description: 'Satellite table containing employee details.'
+    columns:
+      - name: EMPLOYEEID
+        description: 'Business key for the employee.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_Employees')
+              field: 'EMPLOYEEID'
+      - name: FirstName
+        description: 'First name of the employee.'
+        tests:
+          - not_null
+      - name: LastName
+        description: 'Last name of the employee.'
+        tests:
+          - not_null
+      - name: Email
+        description: 'Email address of the employee.'
+        tests:
+          - not_null
+          - unique
+          - accepted_values:
+              values: ['^[A-Za-z0-9+_.-]+@(.+)$']
+              regex: true
+      - name: PhoneNumber
+        description: 'Contact phone number.'
+      - name: Address
+        description: 'Address of the employee.'
+      - name: HireDate
+        description: 'Date the employee was hired.'
+      - name: JobID
+        description: 'Job position ID.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_JobPositions')
+              field: 'JOBID'
+      - name: DepartmentID
+        description: 'Department ID.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_Departments')
+              field: 'DEPARTMENTID'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_JobPositions_Details
+    description: 'Satellite table containing job position details.'
+    columns:
+      - name: JOBID
+        description: 'Business key for the job position.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_JobPositions')
+              field: 'JOBID'
+      - name: JobTitle
+        description: 'Title of the job position.'
+        tests:
+          - not_null
+      - name: JobLevel
+        description: 'Level of the job position.'
+      - name: JobFamily
+        description: 'Family category of the job position.'
+      - name: Description
+        description: 'Description of the job position.'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_Leads_Details
+    description: 'Satellite table containing lead details.'
+    columns:
+      - name: LEADID
+        description: 'Business key for the lead.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_Leads')
+              field: 'LEADID'
+      - name: ContactName
+        description: 'Name of the lead contact.'
+        tests:
+          - not_null
+      - name: Company
+        description: 'Company associated with the lead.'
+      - name: Email
+        description: 'Email address of the lead.'
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['^[A-Za-z0-9+_.-]+@(.+)$']
+              regex: true
+      - name: PhoneNumber
+        description: 'Contact phone number.'
+      - name: LeadStatus
+        description: 'Status of the lead.'
+        tests:
+          - accepted_values:
+              values: ['New', 'Contacted', 'Qualified', 'Lost']
+      - name: Source
+        description: 'Source of the lead.'
+      - name: CreationDate
+        description: 'Date the lead was created.'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_Opportunities_Details
+    description: 'Satellite table containing opportunity details.'
+    columns:
+      - name: OPPORTUNITYID
+        description: 'Business key for the opportunity.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_Opportunities')
+              field: 'OPPORTUNITYID'
+      - name: OpportunityStage
+        description: 'Stage of the opportunity.'
+        tests:
+          - accepted_values:
+              values: ['Prospecting', 'Qualification', 'Proposal', 'Negotiation', 'Closed Won', 'Closed Lost']
+      - name: EstimatedAmount
+        description: 'Estimated amount of the opportunity.'
+        tests:
+          - expression_is_true: 'EstimatedAmount > 0'
+      - name: CloseDate
+        description: 'Expected close date of the opportunity.'
+      - name: Description
+        description: 'Description of the opportunity.'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_Products_Details
+    description: 'Satellite table containing product details.'
+    columns:
+      - name: PRODUCTID
+        description: 'Business key for the product.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_Products')
+              field: 'PRODUCTID'
+      - name: ProductName
+        description: 'Name of the product.'
+        tests:
+          - not_null
+      - name: ProductCode
+        description: 'Code of the product.'
+      - name: CategoryID
+        description: 'Category ID of the product.'
+        tests:
+          - relationships:
+              to: ref('Hub_ProductCategories')
+              field: 'CATEGORYID'
+      - name: SalePrice
+        description: 'Sale price of the product.'
+        tests:
+          - expression_is_true: 'SalePrice >= 0'
+      - name: CostPrice
+        description: 'Cost price of the product.'
+        tests:
+          - expression_is_true: 'CostPrice >= 0'
+      - name: Description
+        description: 'Description of the product.'
+      - name: UnitOfMeasure
+        description: 'Unit of measure for the product.'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_ProductCategories_Details
+    description: 'Satellite table containing product category details.'
+    columns:
+      - name: CATEGORYID
+        description: 'Business key for the product category.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_ProductCategories')
+              field: 'CATEGORYID'
+      - name: CategoryName
+        description: 'Name of the product category.'
+        tests:
+          - not_null
+      - name: CategoryDescription
+        description: 'Description of the product category.'
+      - name: ParentCategoryID
+        description: 'Parent category ID.'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_PurchaseOrders_Details
+    description: 'Satellite table containing purchase order details.'
+    columns:
+      - name: PURCHASEORDERID
+        description: 'Business key for the purchase order.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_PurchaseOrders')
+              field: 'PURCHASEORDERID'
+      - name: OrderDate
+        description: 'Date of the purchase order.'
+        tests:
+          - accepted_values:
+              values: ['^\d{4}-\d{2}-\d{2}$']
+              regex: true
+      - name: TotalAmount
+        description: 'Total amount of the purchase order.'
+        tests:
+          - expression_is_true: 'TotalAmount > 0'
+      - name: Status
+        description: 'Status of the purchase order.'
+      - name: DeliveryDate
+        description: 'Delivery date of the purchase order.'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_StockLocations_Details
+    description: 'Satellite table containing stock location details.'
+    columns:
+      - name: LOCATIONID
+        description: 'Business key for the stock location.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_StockLocations')
+              field: 'LOCATIONID'
+      - name: LocationName
+        description: 'Name of the stock location.'
+        tests:
+          - not_null
+      - name: LocationType
+        description: 'Type of the stock location.'
+      - name: Address
+        description: 'Address of the stock location.'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_Suppliers_Details
+    description: 'Satellite table containing supplier details.'
+    columns:
+      - name: SUPPLIERID
+        description: 'Business key for the supplier.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_Suppliers')
+              field: 'SUPPLIERID'
+      - name: SupplierName
+        description: 'Name of the supplier.'
+        tests:
+          - not_null
+      - name: ContactInformation
+        description: 'Contact details of the supplier.'
+        tests:
+          - not_null
+      - name: Address
+        description: 'Address of the supplier.'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_Tasks_Details
+    description: 'Satellite table containing task details.'
+    columns:
+      - name: TASKID
+        description: 'Business key for the task.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_Tasks')
+              field: 'TASKID'
+      - name: Subject
+        description: 'Subject of the task.'
+      - name: Status
+        description: 'Status of the task.'
+        tests:
+          - accepted_values:
+              values: ['Not Started', 'In Progress', 'Completed', 'Deferred']
+      - name: Priority
+        description: 'Priority of the task.'
+      - name: DueDate
+        description: 'Due date of the task.'
+        tests:
+          - accepted_values:
+              values: ['^\d{4}-\d{2}-\d{2}$']
+              regex: true
+      - name: RelatedEntityID
+        description: 'ID of the related entity.'
+      - name: Description
+        description: 'Description of the task.'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_Users_Details
+    description: 'Satellite table containing user details.'
+    columns:
+      - name: USERID
+        description: 'Business key for the user.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_Users')
+              field: 'USERID'
+      - name: UserName
+        description: 'Name of the user.'
+        tests:
+          - not_null
+      - name: Email
+        description: 'Email address of the user.'
+        tests:
+          - not_null
+          - unique
+          - accepted_values:
+              values: ['^[A-Za-z0-9+_.-]+@(.+)$']
+              regex: true
+      - name: UserRole
+        description: 'Role of the user.'
+        tests:
+          - accepted_values:
+              values: ['Admin', 'Salesperson', 'Manager', 'User']
+      - name: Profile
+        description: 'Profile of the user.'
+      - name: Status
+        description: 'Status of the user.'
+      - name: CreationDate
+        description: 'Date the user was created.'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'
+
+  - name: Sat_Compensations
+    description: 'Satellite table containing compensation details for employees.'
+    columns:
+      - name: EMPLOYEEID
+        description: 'Business key for the employee.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('Hub_Employees')
+              field: 'EMPLOYEEID'
+      - name: BaseSalary
+        description: 'Base salary of the employee.'
+        tests:
+          - expression_is_true: 'BaseSalary > 0'
+      - name: Currency
+        description: 'Currency of the salary.'
+      - name: EffectiveDate
+        description: 'Effective date of the compensation.'
+        tests:
+          - accepted_values:
+              values: ['^\d{4}-\d{2}-\d{2}$']
+              regex: true
+      - name: BonusEligibility
+        description: 'Indicates if the employee is eligible for bonus.'
+      - name: LOAD_DATE
+        description: 'Timestamp when the record was loaded.'
+      - name: RECORD_SOURCE
+        description: 'Source system of the record.'

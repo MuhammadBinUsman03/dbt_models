@@ -1,0 +1,215 @@
+version: 2
+
+models:
+  - name: link_benefit_enrollments
+    description: "Link table for Benefit Enrollments between Employees and Benefit Plans."
+    columns:
+      - name: enrollmentid
+        description: "Unique identifier for the enrollment."
+        tests:
+          - unique
+          - not_null
+      - name: employeeid
+        description: "Employee ID linking to Hub_Employees."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('hub_employees')
+              field: employeeid
+      - name: benefitplanid
+        description: "Benefit Plan ID linking to Hub_BenefitPlans."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('hub_benefitplans')
+              field: benefitplanid
+      - name: load_date
+        description: "Timestamp when the record was loaded."
+      - name: record_source
+        description: "Source of the record."
+
+  - name: link_inventory
+    description: "Link table connecting Products to Stock Locations."
+    columns:
+      - name: inventoryid
+        description: "Unique identifier for the inventory record."
+        tests:
+          - unique
+          - not_null
+      - name: productid
+        description: "Product ID linking to Hub_Products."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('hub_products')
+              field: productid
+      - name: locationid
+        description: "Location ID linking to Hub_StockLocations."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('hub_stock_locations')
+              field: locationid
+      - name: load_date
+        description: "Timestamp when the record was loaded."
+      - name: record_source
+        description: "Source of the record."
+
+  - name: link_job_histories
+    description: "Link table recording employment history linking Employees, Job Positions, and Departments."
+    columns:
+      - name: jobhistoryid
+        description: "Unique identifier for the job history record."
+        tests:
+          - unique
+          - not_null
+      - name: employeeid
+        description: "Employee ID linking to Hub_Employees."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('hub_employees')
+              field: employeeid
+      - name: jobid
+        description: "Job Position ID linking to Hub_JobPositions."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('hub_job_positions')
+              field: jobid
+      - name: departmentid
+        description: "Department ID linking to Hub_Departments."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('hub_departments')
+              field: departmentid
+      - name: startdate
+        description: "Start date of the job position."
+      - name: enddate
+        description: "End date of the job position."
+      - name: load_date
+        description: "Timestamp when the record was loaded."
+      - name: record_source
+        description: "Source of the record."
+
+  - name: link_payrolls
+    description: "Link table for Payroll records of Employees."
+    columns:
+      - name: payrollid
+        description: "Unique identifier for the payroll record."
+        tests:
+          - unique
+          - not_null
+      - name: employeeid
+        description: "Employee ID linking to Hub_Employees."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('hub_employees')
+              field: employeeid
+      - name: load_date
+        description: "Timestamp when the record was loaded."
+      - name: record_source
+        description: "Source of the record."
+
+  - name: link_performance_reviews
+    description: "Link table for Performance Reviews linking Employees and Reviewers."
+    columns:
+      - name: reviewid
+        description: "Unique identifier for the performance review."
+        tests:
+          - unique
+          - not_null
+      - name: employeeid
+        description: "Employee ID linking to the reviewed employee in Hub_Employees."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('hub_employees')
+              field: employeeid
+      - name: reviewerid
+        description: "Reviewer ID linking to the reviewer in Hub_Employees."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('hub_employees')
+              field: employeeid
+      - name: load_date
+        description: "Timestamp when the record was loaded."
+      - name: record_source
+        description: "Source of the record."
+
+  - name: link_sales_orders
+    description: "Link table for Sales Orders placed by Customers and handled by Salespersons."
+    columns:
+      - name: salesorderid
+        description: "Unique identifier for the sales order."
+        tests:
+          - unique
+          - not_null
+      - name: customerid
+        description: "Customer ID linking to Hub_Customers."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('hub_customers')
+              field: customerid
+      - name: salespersonid
+        description: "Salesperson ID linking to Hub_Users."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('hub_users')
+              field: userid
+      - name: load_date
+        description: "Timestamp when the record was loaded."
+      - name: record_source
+        description: "Source of the record."
+
+  - name: link_sales_order_lines
+    description: "Link table for Sales Order Lines linking Sales Orders to Products."
+    columns:
+      - name: salesorderlineid
+        description: "Unique identifier for the sales order line."
+        tests:
+          - unique
+          - not_null
+      - name: salesorderid
+        description: "Sales Order ID linking to Link_SalesOrders."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('link_sales_orders')
+              field: salesorderid
+      - name: productid
+        description: "Product ID linking to Hub_Products."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('hub_products')
+              field: productid
+      - name: load_date
+        description: "Timestamp when the record was loaded."
+      - name: record_source
+        description: "Source of the record."
+
+  - name: link_time_off_requests
+    description: "Link table for Time Off Requests from Employees."
+    columns:
+      - name: requestid
+        description: "Unique identifier for the time off request."
+        tests:
+          - unique
+          - not_null
+      - name: employeeid
+        description: "Employee ID linking to Hub_Employees."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('hub_employees')
+              field: employeeid
+      - name: load_date
+        description: "Timestamp when the record was loaded."
+      - name: record_source
+        description: "Source of the record."
