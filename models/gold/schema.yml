@@ -1,0 +1,41 @@
+version: 2
+
+description: "Gold layer models for analytics"
+
+models:
+  - name: dim_date
+    description: "Date dimension table for time-based analysis"
+    columns:
+      - name: date_key
+        description: "Primary key for the date dimension"
+        tests:
+          - unique
+          - not_null
+      - name: date
+        description: "Calendar date in YYYY-MM-DD format"
+      - name: day_of_week
+        description: "Day of week (1-7, Monday is 1)"
+      - name: day_name
+        description: "Name of the day (Monday, Tuesday, etc.)"
+      - name: day_of_month
+        description: "Day of month (1-31)"
+      - name: day_of_year
+        description: "Day of year (1-366)"
+      - name: week_of_year
+        description: "Week of year (1-53)"
+      - name: month
+        description: "Month number (1-12)"
+      - name: month_name
+        description: "Name of the month (January, February, etc.)"
+      - name: quarter
+        description: "Quarter (1-4)"
+      - name: year
+        description: "Year (YYYY)"
+      - name: is_weekend
+        description: "Flag indicating if the date is a weekend (True/False)"
+      - name: is_holiday
+        description: "Flag indicating if the date is a holiday (True/False)"
+      - name: fiscal_year
+        description: "Fiscal year"
+      - name: fiscal_quarter
+        description: "Fiscal quarter"
