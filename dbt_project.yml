@@ -22,6 +22,18 @@ models:
       satellites:
         +schema: silver
         +materialized: incremental
+    gold:
+      +schema: gold
+      +materialized: table
+      sales:
+        +schema: gold_sales
+        +materialized: table
+      hr:
+        +schema: gold_hr
+        +materialized: table
+      inventory:
+        +schema: gold_inventory
+        +materialized: table
     sources:
       +schema: bronze
       +materialized: view

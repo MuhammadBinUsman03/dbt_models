@@ -1,0 +1,189 @@
+version: 2
+
+description: "Gold layer models for Sales domain"
+
+models:
+  - name: dim_customer
+    description: "Customer dimension table"
+    columns:
+      - name: customer_key
+        description: "Primary key for the customer dimension"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Business key from source system"
+        tests:
+          - not_null
+      - name: customer_name
+        description: "Customer name"
+      - name: customer_type
+        description: "Type of customer (Individual, Corporate)"
+      - name: email
+        description: "Customer email address"
+      - name: phone
+        description: "Customer phone number"
+      - name: address
+        description: "Customer address"
+      - name: effective_from
+        description: "Date from which this customer record is effective"
+      - name: effective_to
+        description: "Date until which this customer record is effective"
+      - name: is_current
+        description: "Flag indicating if this is the current record for the customer"
+
+  - name: dim_account
+    description: "Account dimension table"
+    columns:
+      - name: account_key
+        description: "Primary key for the account dimension"
+        tests:
+          - unique
+          - not_null
+      - name: account_id
+        description: "Business key from source system"
+        tests:
+          - not_null
+      - name: account_name
+        description: "Account name"
+      - name: account_type
+        description: "Type of account"
+      - name: industry
+        description: "Industry the account belongs to"
+      - name: annual_revenue
+        description: "Annual revenue of the account"
+      - name: phone
+        description: "Account phone number"
+      - name: website
+        description: "Account website"
+      - name: billing_address
+        description: "Account billing address"
+      - name: shipping_address
+        description: "Account shipping address"
+      - name: effective_from
+        description: "Date from which this account record is effective"
+      - name: effective_to
+        description: "Date until which this account record is effective"
+      - name: is_current
+        description: "Flag indicating if this is the current record for the account"
+
+  - name: dim_product
+    description: "Product dimension table"
+    columns:
+      - name: product_key
+        description: "Primary key for the product dimension"
+        tests:
+          - unique
+          - not_null
+      - name: product_id
+        description: "Business key from source system"
+        tests:
+          - not_null
+      - name: product_name
+        description: "Product name"
+      - name: product_code
+        description: "Product code"
+      - name: category_id
+        description: "ID of the product category"
+      - name: category_name
+        description: "Name of the product category"
+      - name: sale_price
+        description: "Sale price of the product"
+      - name: cost_price
+        description: "Cost price of the product"
+      - name: description
+        description: "Product description"
+      - name: uom
+        description: "Unit of measure"
+      - name: effective_from
+        description: "Date from which this product record is effective"
+      - name: effective_to
+        description: "Date until which this product record is effective"
+      - name: is_current
+        description: "Flag indicating if this is the current record for the product"
+
+  - name: fact_sales
+    description: "Sales fact table"
+    columns:
+      - name: sales_key
+        description: "Primary key for the sales fact"
+        tests:
+          - unique
+          - not_null
+      - name: sales_order_id
+        description: "Business key from source system"
+        tests:
+          - not_null
+      - name: sales_order_line_id
+        description: "Line item ID from source system"
+      - name: customer_key
+        description: "Foreign key to customer dimension"
+        tests:
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_key
+      - name: product_key
+        description: "Foreign key to product dimension"
+        tests:
+          - relationships:
+              to: ref('dim_product')
+              field: product_key
+      - name: date_key
+        description: "Foreign key to date dimension"
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+      - name: user_key
+        description: "Foreign key to user dimension (salesperson)"
+      - name: quantity
+        description: "Quantity sold"
+      - name: unit_price
+        description: "Unit price at time of sale"
+      - name: subtotal
+        description: "Subtotal for the line item (quantity * unit_price)"
+      - name: total_amount
+        description: "Total amount for the order"
+      - name: status
+        description: "Status of the order"
+
+  - name: fact_opportunity
+    description: "Opportunity fact table"
+    columns:
+      - name: opportunity_key
+        description: "Primary key for the opportunity fact"
+        tests:
+          - unique
+          - not_null
+      - name: opportunity_id
+        description: "Business key from source system"
+        tests:
+          - not_null
+      - name: account_key
+        description: "Foreign key to account dimension"
+        tests:
+          - relationships:
+              to: ref('dim_account')
+              field: account_key
+      - name: date_key
+        description: "Foreign key to date dimension (close date)"
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+      - name: created_date_key
+        description: "Foreign key to date dimension (created date)"
+      - name: user_key
+        description: "Foreign key to user dimension (owner)"
+      - name: opportunity_name
+        description: "Name of the opportunity"
+      - name: stage
+        description: "Stage of the opportunity"
+      - name: amount
+        description: "Amount of the opportunity"
+      - name: probability
+        description: "Probability of closing the opportunity"
+      - name: is_closed
+        description: "Flag indicating if the opportunity is closed"
+      - name: is_won
+        description: "Flag indicating if the opportunity is won"

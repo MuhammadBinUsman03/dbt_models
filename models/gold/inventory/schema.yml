@@ -1,0 +1,159 @@
+version: 2
+
+description: "Gold layer models for Inventory domain"
+
+models:
+  - name: dim_stock_location
+    description: "Stock location dimension table"
+    columns:
+      - name: location_key
+        description: "Primary key for the stock location dimension"
+        tests:
+          - unique
+          - not_null
+      - name: location_id
+        description: "Business key from source system"
+        tests:
+          - not_null
+      - name: location_name
+        description: "Stock location name"
+      - name: location_type
+        description: "Type of stock location"
+      - name: effective_from
+        description: "Date from which this stock location record is effective"
+      - name: effective_to
+        description: "Date until which this stock location record is effective"
+      - name: is_current
+        description: "Flag indicating if this is the current record for the stock location"
+
+  - name: dim_supplier
+    description: "Supplier dimension table"
+    columns:
+      - name: supplier_key
+        description: "Primary key for the supplier dimension"
+        tests:
+          - unique
+          - not_null
+      - name: supplier_id
+        description: "Business key from source system"
+        tests:
+          - not_null
+      - name: supplier_name
+        description: "Supplier name"
+      - name: email
+        description: "Supplier email address"
+      - name: phone
+        description: "Supplier phone number"
+      - name: address
+        description: "Supplier address"
+      - name: effective_from
+        description: "Date from which this supplier record is effective"
+      - name: effective_to
+        description: "Date until which this supplier record is effective"
+      - name: is_current
+        description: "Flag indicating if this is the current record for the supplier"
+
+  - name: fact_inventory
+    description: "Inventory fact table"
+    columns:
+      - name: inventory_key
+        description: "Primary key for the inventory fact"
+        tests:
+          - unique
+          - not_null
+      - name: inventory_id
+        description: "Business key from source system"
+      - name: product_key
+        description: "Foreign key to product dimension"
+        tests:
+          - relationships:
+              to: ref('dim_product')
+              field: product_key
+      - name: location_key
+        description: "Foreign key to stock location dimension"
+        tests:
+          - relationships:
+              to: ref('dim_stock_location')
+              field: location_key
+      - name: date_key
+        description: "Foreign key to date dimension (snapshot date)"
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+      - name: quantity_on_hand
+        description: "Quantity of product on hand"
+      - name: quantity_reserved
+        description: "Quantity of product reserved"
+      - name: quantity_available
+        description: "Quantity of product available (on_hand - reserved)"
+      - name: is_current
+        description: "Flag indicating if this is the current inventory record"
+
+  - name: fact_purchase_order
+    description: "Purchase order fact table"
+    columns:
+      - name: purchase_order_key
+        description: "Primary key for the purchase order fact"
+        tests:
+          - unique
+          - not_null
+      - name: purchase_order_id
+        description: "Business key from source system"
+        tests:
+          - not_null
+      - name: supplier_key
+        description: "Foreign key to supplier dimension"
+        tests:
+          - relationships:
+              to: ref('dim_supplier')
+              field: supplier_key
+      - name: order_date_key
+        description: "Foreign key to date dimension (order date)"
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+      - name: total_amount
+        description: "Total amount of the purchase order"
+      - name: status
+        description: "Status of the purchase order"
+
+  - name: fact_stock_movement
+    description: "Stock movement fact table"
+    columns:
+      - name: movement_key
+        description: "Primary key for the stock movement fact"
+        tests:
+          - unique
+          - not_null
+      - name: product_key
+        description: "Foreign key to product dimension"
+        tests:
+          - relationships:
+              to: ref('dim_product')
+              field: product_key
+      - name: location_key
+        description: "Foreign key to stock location dimension"
+        tests:
+          - relationships:
+              to: ref('dim_stock_location')
+              field: location_key
+      - name: date_key
+        description: "Foreign key to date dimension (movement date)"
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+      - name: movement_type
+        description: "Type of movement (Inbound, Outbound, Transfer)"
+      - name: reference_id
+        description: "Reference ID (e.g., sales order ID, purchase order ID)"
+      - name: reference_type
+        description: "Reference type (e.g., Sales Order, Purchase Order)"
+      - name: quantity
+        description: "Quantity moved"
+      - name: unit_cost
+        description: "Unit cost at time of movement"
+      - name: total_cost
+        description: "Total cost of movement (quantity * unit_cost)"
